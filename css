@@ -1,0 +1,516 @@
+/* ================================
+   RIPPLE — style.css
+   ================================ */
+
+/* IMPORT FONT */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;500&display=swap');
+
+/* ================================
+   RESET & BASE
+   ================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0a0f0d;
+  color: #e8fff5;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ================================
+   NAVBAR
+   ================================ */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(0, 255, 135, 0.15);
+  background: rgba(10, 15, 13, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  color: #00ff87;
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px rgba(0, 255, 135, 0.6);
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links a {
+  font-size: 13px;
+  color: #7aada0;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #e8fff5;
+}
+
+.nav-links a.active {
+  color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* ================================
+   HERO
+   ================================ */
+.hero {
+  text-align: center;
+  padding: 2.5rem 2rem 1rem;
+}
+
+.hero-tag {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: #00d4ff;
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+  margin-bottom: 8px;
+}
+
+.hero-sub {
+  font-size: 13px;
+  color: #7aada0;
+}
+
+/* ================================
+   MAIN GRID
+   ================================ */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+}
+
+/* ================================
+   CARD
+   ================================ */
+.card {
+  background: #0d1f1a;
+  border: 1px solid rgba(0, 255, 135, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: -40px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 255, 135, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.card-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #00ff87;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 8px rgba(0, 255, 135, 0.4);
+}
+
+/* ================================
+   EARTH VISUAL
+   ================================ */
+.earth-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 1.5rem;
+}
+
+.earth-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 135, 0.15);
+  animation: spin 8s linear infinite;
+}
+
+.earth-ring-2 {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  animation: spin 5s linear infinite reverse;
+}
+
+.earth-core {
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  background: conic-gradient(#00ff87 0% 55%, #00d4ff 55% 80%, #1a3d2e 80% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 30px rgba(0, 255, 135, 0.3),
+    0 0 60px rgba(0, 255, 135, 0.1);
+  animation: pulse 3s ease-in-out infinite;
+  transition: background 1s ease;
+}
+
+.earth-inner {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  background: #0d1f1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.earth-score {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 26px;
+  color: #00ff87;
+  text-shadow: 0 0 15px rgba(0, 255, 135, 0.7);
+  line-height: 1;
+}
+
+.earth-label {
+  font-size: 9px;
+  color: #7aada0;
+  letter-spacing: 1px;
+}
+
+/* ================================
+   STATS GRID
+   ================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.stat {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid;
+  text-align: center;
+}
+
+.stat.green {
+  border-color: rgba(0, 255, 135, 0.3);
+  background: rgba(0, 255, 135, 0.05);
+}
+
+.stat.blue {
+  border-color: rgba(0, 212, 255, 0.3);
+  background: rgba(0, 212, 255, 0.05);
+}
+
+.stat.yellow {
+  border-color: rgba(255, 200, 0, 0.3);
+  background: rgba(255, 200, 0, 0.05);
+}
+
+.stat.red {
+  border-color: rgba(255, 68, 68, 0.3);
+  background: rgba(255, 68, 68, 0.05);
+}
+
+.stat-name {
+  font-size: 10px;
+  margin-bottom: 3px;
+  opacity: 0.8;
+}
+
+.stat.green .stat-name { color: #00ff87; }
+.stat.blue .stat-name  { color: #00d4ff; }
+.stat.yellow .stat-name{ color: #ffc800; }
+.stat.red .stat-name   { color: #ff4444; }
+
+.stat-val {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.stat.green .stat-val { color: #00ff87; }
+.stat.blue .stat-val  { color: #00d4ff; }
+.stat.yellow .stat-val{ color: #ffc800; }
+.stat.red .stat-val   { color: #ff4444; }
+
+/* ================================
+   QUOTE BOX
+   ================================ */
+.quote-box {
+  padding: 12px;
+  border-left: 2px solid #00ff87;
+  background: rgba(0, 255, 135, 0.04);
+  border-radius: 0 8px 8px 0;
+}
+
+.quote-box p {
+  font-size: 12px;
+  color: #7aada0;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ================================
+   BUTTERFLY EFFECT
+   ================================ */
+.butterfly-sub {
+  font-size: 13px;
+  color: #7aada0;
+  margin-bottom: 1rem;
+}
+
+.habits {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.habit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 255, 135, 0.2);
+  background: rgba(0, 255, 135, 0.03);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.habit:hover {
+  border-color: rgba(0, 255, 135, 0.5);
+  background: rgba(0, 255, 135, 0.08);
+}
+
+.habit.active-habit {
+  border-color: #00ff87;
+  background: rgba(0, 255, 135, 0.1);
+  box-shadow: 0 0 12px rgba(0, 255, 135, 0.15);
+}
+
+.habit span {
+  font-size: 13px;
+  color: #e8fff5;
+}
+
+.habit-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: blink 2s ease-in-out infinite;
+}
+
+.green-dot  { background: #00ff87; box-shadow: 0 0 8px rgba(0, 255, 135, 0.6); }
+.blue-dot   { background: #00d4ff; box-shadow: 0 0 8px rgba(0, 212, 255, 0.6); }
+.yellow-dot { background: #ffc800; box-shadow: 0 0 8px rgba(255, 200, 0, 0.6); }
+
+/* ================================
+   CHAIN / DOMINO EFFECT
+   ================================ */
+.chain {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.chain-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  opacity: 0;
+  animation: fadeUp 0.4s ease forwards;
+}
+
+.chain-item:nth-child(1) { animation-delay: 0.1s; }
+.chain-item:nth-child(2) { animation-delay: 0.5s; }
+.chain-item:nth-child(3) { animation-delay: 0.9s; }
+.chain-item:nth-child(4) { animation-delay: 1.3s; }
+.chain-item:nth-child(5) { animation-delay: 1.7s; }
+.chain-item:nth-child(6) { animation-delay: 2.1s; }
+
+.chain-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.chain-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00ff87;
+  box-shadow: 0 0 10px rgba(0, 255, 135, 0.6);
+  flex-shrink: 0;
+}
+
+.chain-dot.blue   { background: #00d4ff; box-shadow: 0 0 10px rgba(0, 212, 255, 0.6); }
+.chain-dot.yellow { background: #ffc800; box-shadow: 0 0 10px rgba(255, 200, 0, 0.6); }
+
+.chain-line {
+  width: 1px;
+  flex: 1;
+  min-height: 20px;
+  background: linear-gradient(to bottom, rgba(0, 255, 135, 0.4), rgba(0, 212, 255, 0.2));
+}
+
+.chain-text {
+  font-size: 13px;
+  color: #e8fff5;
+  line-height: 1.4;
+  padding-top: 0;
+}
+
+.chain-text small {
+  display: block;
+  font-size: 11px;
+  color: #7aada0;
+  margin-top: 2px;
+}
+
+.chain-text.final {
+  color: #ffc800;
+}
+
+/* ================================
+   BOTTOM CTA
+   ================================ */
+.bottom-cta {
+  padding: 0 2rem 2rem;
+}
+
+.cta-card {
+  background: #0d1f1a;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cta-card p {
+  font-size: 13px;
+  color: #7aada0;
+  margin-bottom: 4px;
+}
+
+.cta-card strong {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+}
+
+.cta-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #00ff87;
+  background: rgba(0, 255, 135, 0.1);
+  color: #00ff87;
+  font-size: 13px;
+  cursor: pointer;
+  text-shadow: 0 0 8px rgba(0, 255, 135, 0.4);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+  background: rgba(0, 255, 135, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 135, 0.2);
+}
+
+/* ================================
+   ANIMASI
+   ================================ */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 30px rgba(0, 255, 135, 0.3),
+      0 0 60px rgba(0, 255, 135, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(0, 255, 135, 0.5),
+      0 0 80px rgba(0, 255, 135, 0.2);
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 768px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .navbar {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .cta-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .bottom-cta {
+    padding: 0 1rem 2rem;
+  }
+}
