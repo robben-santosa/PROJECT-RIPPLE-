@@ -1,0 +1,112 @@
+!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIPPLE — Earth Mirror</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">RIPPLE</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="input.html">Daily Input</a>
+      <a href="mirror.html" class="active">Earth Mirror</a>
+      <a href="global.html">Global Ripple</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-tag">EARTH MIRROR — BUMI VERSI KAMU</p>
+    <p class="hero-sub">Setiap pilihanmu hari ini membentuk dunia esok hari</p>
+  </section>  
+
+  <!-- MAIN GRID -->
+  <main class="main-grid">
+
+    <!-- CARD KIRI: EARTH MIRROR -->
+    <div class="card">
+      <p class="card-label">Status Bumiku</p>
+
+      <div class="earth-wrap">
+        <div class="earth-ring"></div>
+        <div class="earth-ring-2"></div>
+        <div class="earth-core" id="earthCore">
+          <div class="earth-inner">
+            <span class="earth-score" id="earthScore">72%</span>
+            <span class="earth-label">HEALTH INDEX</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat green">
+          <p class="stat-name">Lingkungan</p>
+          <p class="stat-val">Baik</p>
+        </div>
+        <div class="stat blue">
+          <p class="stat-name">Pendidikan</p>
+          <p class="stat-val">Bagus</p>
+        </div>
+        <div class="stat yellow">
+          <p class="stat-name">Ekonomi</p>
+          <p class="stat-val">Sedang</p>
+        </div>
+        <div class="stat red">
+          <p class="stat-name">Sosial</p>
+          <p class="stat-val">Perlu Perhatian</p>
+        </div>
+      </div>
+
+      <div class="quote-box">
+        <p>"Kalau 10 juta pelajar Indonesia hidup seperti kamu, Indonesia di 2050 akan berada di posisi ke-12 dunia dalam indeks keberlanjutan."</p>
+      </div>
+    </div>
+
+    <!-- CARD KANAN: BUTTERFLY EFFECT -->
+    <div class="card">
+      <p class="card-label">Butterfly Effect Simulator</p>
+      <p class="butterfly-sub">Bagaimana kalau kamu ubah satu kebiasaan?</p>
+
+      <div class="habits" id="habitList">
+        <div class="habit active-habit" data-habit="jalan">
+          <div class="habit-dot green-dot"></div>
+          <span>Jalan kaki ke sekolah</span>
+        </div>
+        <div class="habit" data-habit="belajar">
+          <div class="habit-dot blue-dot"></div>
+          <span>Belajar 2 jam ekstra</span>
+        </div>
+        <div class="habit" data-habit="nabung">
+          <div class="habit-dot yellow-dot"></div>
+          <span>Nabung Rp5.000/hari</span>
+        </div>
+      </div>
+
+      <div class="chain" id="chainList">
+        <!-- Diisi otomatis oleh main.js -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- BOTTOM CTA -->
+  <section class="bottom-cta">
+    <div class="cta-card">
+      <div>
+        <p>Ingin lihat dampak globalmu?</p>
+        <strong>Lihat gelombang kolektif Indonesia hari ini</strong>
+      </div>
+      <a href="global.html" class="cta-btn">Global Ripple →</a>
+    </div>
+  </section>
+
+  <script src="js/main.js"></script>
+
+</body>
+</html>
