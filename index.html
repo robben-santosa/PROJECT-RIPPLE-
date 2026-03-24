@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIPPLE — Every Choice You Make, The World Feels It</title>
+  <meta name="description" content="Visualisasikan bagaimana keputusan harian pelajar Indonesia menciptakan gelombang perubahan yang dunia rasakan.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/extra.css">
+  <link rel="stylesheet" href="css/crazy.css">
+</head>
+<body>
+
+  <!-- ══ WELCOME INTRO OVERLAY ═════════════════════════════════ -->
+  <div id="welcome-intro" class="welcome-intro-overlay" style="display:none;">
+    <div class="welcome-content">
+      <div class="welcome-icon">🌍</div>
+      <h2 id="welcome-title">Selamat datang di RIPPLE!</h2>
+      <p id="welcome-desc">Sistem berhasil disinkronisasi.</p>
+      <button class="btn btn-primary" style="padding: 14px 40px; font-size: 1.05rem;" onclick="closeIntro()">
+        Masuk ke Dashboard →
+      </button>
+    </div>
+  </div>
+
+<!-- ══ TOP FACT TICKER ══════════════════════════════════════ -->
+<div class="top-ticker" id="top-ticker">
+  <div class="ticker-track" id="top-ticker-track">
+    <span>🌳 12.847 pohon ditanam hari ini</span>
+    <span class="ticker-sep">•</span>
+    <span>☁️ CO₂ global: 417 ppm</span>
+    <span class="ticker-sep">•</span>
+    <span>💧 1 dari 4 orang kekurangan air bersih</span>
+    <span class="ticker-sep">•</span>
+    <span>🌡️ Suhu bumi +1.2°C dari era pra-industri</span>
+    <span class="ticker-sep">•</span>
+    <span>♻️ Hanya 9% plastik yang pernah didaur ulang</span>
+    <span class="ticker-sep">•</span>
+    <span>🐝 40% spesies lebah dalam ancaman kepunahan</span>
+    <span class="ticker-sep">•</span>
+    <span>🌊 Level laut naik 3,6 mm per tahun</span>
+    <span class="ticker-sep">•</span>
+    <span>⚡ 733 juta orang masih tanpa listrik</span>
+    <span class="ticker-sep">•</span>
+    <span>🌳 12.847 pohon ditanam hari ini</span>
+    <span class="ticker-sep">•</span>
+    <span>☁️ CO₂ global: 417 ppm</span>
+    <span class="ticker-sep">•</span>
+    <span>💧 1 dari 4 orang kekurangan air bersih</span>
+    <span class="ticker-sep">•</span>
+    <span>🌡️ Suhu bumi +1.2°C dari era pra-industri</span>
+    <span class="ticker-sep">•</span>
+  </div>
+</div>
+
+<!-- ══ NAVIGATION ══════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-profile-section" data-nav="profile" style="cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+    <div class="nav-profile-aura">
+      <div class="nav-profile-avatar" id="nav-profile-avatar"></div>
+    </div>
+    <h3 class="nav-profile-name" id="nav-profile-name">Pelajar</h3>
+    <span class="nav-profile-role">@peloporbumi</span>
+  </div>
+
+  <div class="nav-links">
+    <button data-nav="landing" class="nav-link-btn active">
+      <span class="nav-icon">🏠</span> <span>Home</span>
+    </button>
+    <button data-nav="mirror" class="nav-link-btn">
+      <span class="nav-icon">🪞</span> <span>Earth Mirror</span>
+      <span class="nav-badge">Pusat</span>
+    </button>
+    <button data-nav="profile" class="nav-link-btn">
+      <span class="nav-icon">👤</span> <span>Profil Pelajar</span>
+    </button>
+    <button data-nav="daily" class="nav-link-btn">
+      <span class="nav-icon">📝</span> <span>Input Hari Ini</span>
+    </button>
+    <button data-nav="about" class="nav-link-btn">
+      <span class="nav-icon">ℹ️</span> <span>Tentang Kami</span>
+    </button>
+  </div>
+  
+  <div class="nav-bottom-cta">
+    <div class="nav-cta-card">
+      <div class="nav-globe-mini-wrap">
+        <canvas id="nav-globe-canvas" class="nav-globe-mini" width="48" height="48"></canvas>
+      </div>
+      <p>Simulasi Bumi<br>Sedang Berjalan</p>
+      <button class="btn btn-primary" style="width:100%;font-size:0.75rem;padding:10px 0;border-radius:12px;" data-nav="profile">Lihat Dampakmu</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ RIPPLE OVERLAY ═══════════════════════════════════════ -->
+<div id="ripple-overlay">
+  <svg id="ripple-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION — LANDING (Two-column: text left, globe right)
+══════════════════════════════════════════════════════════ -->
+<section data-section="landing" id="section-landing" class="active">
+  <div class="landing-bg-new"></div>
+
+  <div class="landing-two-col">
+    <!-- ── LEFT — Text Content ─────────────────────────── -->
+    <div class="landing-left-col">
+      <div class="landing-badge-row">
+        <span class="badge badge-violet">🌍 INNOVATE 2025</span>
+        <span class="badge badge-green" style="margin-left:6px;">Pelajar Indonesia</span>
+      </div>
+
+      <h1 class="landing-hero-title">
+        Kamu pikir kamu<br>cuma <span class="gradient-text">pelajar biasa.</span>
+      </h1>
+
+      <p class="landing-hero-brand">
+        R<span style="color:#f97316;">IPPLE</span>
+        <span class="landing-hero-tagline">Every Choice You Make — The World Feels It</span>
+      </p>
+
+      <p class="landing-hero-desc">
+        Setiap keputusan harian pelajar Indonesia divisualisasikan sebagai gelombang 
+        yang menyebar ke seluruh sistem dunia. AI tunjukkan bumi 
+        <em>seperti apa</em> yang sedang kamu bangun.
+      </p>
+
+      <div class="landing-cta">
+        <button class="btn btn-primary" id="btn-start" data-nav="mirror" style="padding:16px 36px;font-size:1rem;">
+          🌊 Mulai Perjalananmu
+        </button>
+        <button class="btn btn-ghost" id="btn-about" data-nav="about" style="padding:16px 24px;">
+          📖 Pelajari Lebih
+        </button>
+      </div>
+
+      <!-- Layer pills -->
+      <div class="landing-pills">
+        <span class="badge badge-violet">🎓 Pikiran</span>
+        <span class="badge badge-green">💚 Jiwa</span>
+        <span class="badge badge-amber">🤝 Hubungan</span>
+        <span class="badge badge-red">💰 Pilihan</span>
+        <span class="badge badge-green">🌱 Tapak</span>
+      </div>
+
+      <!-- Mini live stat row -->
+      <div class="landing-live-row">
+        <div class="landing-live-stat">
+          <span class="landing-live-val">12.4M</span>
+          <span class="landing-live-lbl">Pelajar dalam jaringan</span>
+        </div>
+        <div class="landing-live-divider"></div>
+        <div class="landing-live-stat">
+          <span class="landing-live-val" style="color:#22c55e;">247K</span>
+          <span class="landing-live-lbl">Ripple positif hari ini</span>
+        </div>
+        <div class="landing-live-divider"></div>
+        <div class="landing-live-stat">
+          <span class="landing-live-val" style="color:#fbbf24;">417</span>
+          <span class="landing-live-lbl">ppm CO₂ saat ini</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RIGHT — Globe Visual ────────────────────────── -->
+    <div class="landing-right-col">
+      <!-- Orbit decoration rings -->
+      <div class="orbit-rings">
+        <div class="orbit-ring ring-1"></div>
+        <div class="orbit-ring ring-2"></div>
+        <div class="orbit-ring ring-3"></div>
+      </div>
+
+      <!-- Glow backdrop -->
+      <div class="globe-glow-backdrop"></div>
+
+      <!-- The globe -->
+      <canvas id="globe-canvas-landing" class="landing-globe-canvas"></canvas>
+
+      <!-- Floating data tags -->
+      <div class="globe-tag tag-tl">
+        <span class="globe-tag-val">+1.2°C</span>
+        <span class="globe-tag-lbl">Kenaikan Suhu</span>
+      </div>
+      <div class="globe-tag tag-tr">
+        <span class="globe-tag-val">417 ppm</span>
+        <span class="globe-tag-lbl">CO₂ Global</span>
+      </div>
+      <div class="globe-tag tag-bl">
+        <span class="globe-tag-val">+12%</span>
+        <span class="globe-tag-lbl">Energi Hijau</span>
+      </div>
+      <div class="globe-tag tag-br">
+        <span class="globe-tag-val">-50%</span>
+        <span class="globe-tag-lbl">Terumbu Karang</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="landing-scroll-hint">
+    <span>Scroll untuk explore</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION — ONBOARDING
+══════════════════════════════════════════════════════════ -->
+<section data-section="onboarding" id="section-onboarding">
+  <div class="onboarding-bg"></div>
+  <div class="onboarding-box card" style="padding:40px;">
+    <div class="onboarding-progress">
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="onboarding-progress-fill" style="width:0%"></div>
+      </div>
+      <div class="progress-label">
+        <span style="color:var(--violet);font-weight:600;">Kalibrasi Bumiku</span>
+        <span id="onboarding-step-label">1 / 5</span>
+      </div>
+    </div>
+    <div id="onboarding-question-area"></div>
+    <div class="q-actions">
+      <button class="btn btn-ghost" onclick="RIPPLE.prevOnboardingStep()">← Kembali</button>
+      <button class="btn btn-primary" onclick="RIPPLE.nextOnboardingStep()">Lanjut →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION — DASHBOARD
+══════════════════════════════════════════════════════════ -->
+<section data-section="dashboard" id="section-dashboard">
+  <div class="container section">
+    <div id="dashboard-header" class="mb-8"></div>
+    <div class="dashboard-grid">
+      <div class="dashboard-layers">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+          <h2 style="font-size:1.1rem;color:var(--text-2);">Lima Lapisan Kehidupanmu</h2>
+          <button class="btn btn-ghost" style="padding:8px 16px;font-size:0.8rem;" data-nav="daily">+ Input Hari Ini</button>
+        </div>
+        <div id="layer-cards-container"></div>
+      </div>
+      <div class="earth-mirror-sidebar">
+        <div class="card earth-mirror-card">
+          <h2>🪞 EARTH MIRROR</h2>
+          <canvas id="globe-canvas-mirror" width="200" height="200"></canvas>
+          <div class="mirror-health-label" id="mirror-health-val">⚡ Seimbang</div>
+          <div class="mirror-health-sub" id="mirror-health-sub">Kesehatan Bumi-mu: 50/100</div>
+          <div class="mirror-stats">
+            <div class="mirror-stat">
+              <div class="mirror-stat-val" id="mirror-stat-total">0</div>
+              <div class="mirror-stat-label">Total Skor</div>
+            </div>
+            <div class="mirror-stat">
+              <div class="mirror-stat-val" id="mirror-stat-week">Minggu 1</div>
+              <div class="mirror-stat-label">Progress</div>
+            </div>
+          </div>
+          <div class="mirror-cta-row">
+            <button class="btn btn-primary" style="font-size:0.85rem;" data-nav="mirror">Lihat Full Earth Mirror</button>
+            <button class="btn btn-ghost" style="font-size:0.85rem;" data-nav="report">📊 Civilization Report</button>
+          </div>
+        </div>
+        <div class="card" style="padding:20px;margin-top:16px;">
+          <p class="caption" style="margin-bottom:8px;">💡 Tahukah Kamu?</p>
+          <p style="font-size:0.82rem;color:var(--text-2);line-height:1.7;">
+            Jika 10 juta pelajar Indonesia membuat satu keputusan positif hari ini, 
+            efeknya setara dengan menyelamatkan <strong style="color:var(--green)">hutan seluas 500 lapangan sepakbola</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION — EARTH MIRROR (Full Page — Screenshot Layout)
+══════════════════════════════════════════════════════════ -->
+<section data-section="mirror" id="section-mirror">
+
+  <!-- ── Hero Header ──────────────────────────────────────── -->
+  <div class="em-hero">
+    <div class="em-hero-inner">
+      <div class="em-hero-left">
+        <span class="badge badge-violet" style="margin-bottom:12px;display:inline-block;">🪞 Earth Mirror — AI Powered</span>
+        <h1 class="em-hero-title">Bumi Versi <span class="gradient-text" id="em-hero-name">Kamu</span></h1>
+        <p class="em-hero-desc">
+          Setiap keputusan harianmu menciptakan cerminan nyata kondisi bumi. 
+          AI kami terjemahkan hidupmu menjadi data planet secara real-time.
+        </p>
+        <div class="em-hero-pills">
+          <div class="em-hero-pill">
+            <span class="em-hero-pill-val" id="hero-health-val">52%</span>
+            <span class="em-hero-pill-lbl">🌍 Global Health</span>
+          </div>
+          <div class="em-hero-pill">
+            <span class="em-hero-pill-val" style="color:#22c55e;">3.6M</span>
+            <span class="em-hero-pill-lbl">🎓 Pelajar Aktif</span>
+          </div>
+          <div class="em-hero-pill">
+            <span class="em-hero-pill-val" style="color:#fbbf24;">417</span>
+            <span class="em-hero-pill-lbl">☁️ ppm CO₂</span>
+          </div>
+        </div>
+      </div>
+      <div class="em-hero-right">
+        <div class="em-hero-quote">
+          <div class="em-hero-quote-mark">"</div>
+          <p>Setiap pilihanmu menciptakan gelombang yang dunia rasakan — bahkan jika kamu tidak pernah merasakannya sendiri.</p>
+          <div class="em-hero-quote-author">— RIPPLE Earth Mirror AI</div>
+        </div>
+        <div class="em-hero-health-bar-wrap">
+          <div class="em-hero-hb-label">
+            <span>KESEHATAN BUMIKU</span>
+            <span id="hero-hb-pct">52%</span>
+          </div>
+          <div class="em-hero-hb-track">
+            <div class="em-hero-hb-fill" id="hero-hb-fill" style="width:52%"></div>
+          </div>
+          <div class="em-hero-hb-scale">
+            <span>Kritis</span><span>Stres</span><span>Seimbang</span><span>Sehat</span><span>Optimal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Two-column main layout -->
+  <div class="em-layout">
+
+    <!-- ── LEFT PANEL ──────────────────────────────────────── -->
+    <div class="em-left">
+
+      <!-- Status Bumiku Card -->
+      <div class="em-card em-status-card">
+        <div class="em-card-header">
+          <span class="em-live-dot"></span>
+          <span class="em-card-title">STATUS BUMIKU</span>
+          <span class="em-card-sub" id="em-user-name-label">— BUMI VERSI KAMU</span>
+        </div>
+
+        <!-- Globe + health ring -->
+        <div class="em-globe-wrap">
+          <div class="em-health-ring" id="em-health-ring">
+            <canvas id="globe-canvas-full" width="220" height="220"></canvas>
+            <div class="em-health-pct" id="em-health-pct">0%</div>
+            <div class="em-health-lbl">HEALTH INDEX</div>
+          </div>
+        </div>
+
+        <!-- 4 Dimension mini-stats -->
+        <div class="em-dim-grid">
+          <div class="em-dim-card" id="emd-nature">
+            <span class="em-dim-icon">🌱</span>
+            <span class="em-dim-label">LINGKUNGAN</span>
+            <span class="em-dim-val" id="dimval-nature">—</span>
+          </div>
+          <div class="em-dim-card" id="emd-mind">
+            <span class="em-dim-icon">📚</span>
+            <span class="em-dim-label">PENDIDIKAN</span>
+            <span class="em-dim-val" id="dimval-mind">—</span>
+          </div>
+          <div class="em-dim-card" id="emd-economic">
+            <span class="em-dim-icon">💰</span>
+            <span class="em-dim-label">EKONOMI</span>
+            <span class="em-dim-val" id="dimval-economic">—</span>
+          </div>
+          <div class="em-dim-card" id="emd-social">
+            <span class="em-dim-icon">🤝</span>
+            <span class="em-dim-label">SOSIAL</span>
+            <span class="em-dim-val" id="dimval-social">—</span>
+          </div>
+        </div>
+
+        <!-- Fakta Bumi -->
+        <div class="em-fact-box">
+          <div class="em-fact-header">
+            <span class="em-fact-icon">🌍</span>
+            <span class="em-fact-title">FAKTA BUMI</span>
+            <span class="em-fact-counter" id="em-fact-counter">1/6</span>
+          </div>
+          <p class="em-fact-text" id="em-fact-text">
+            Setiap menit, 36 lapangan sepak bola hutan tropis ditebang di seluruh dunia.
+          </p>
+          <div class="em-fact-dots" id="em-fact-dots"></div>
+        </div>
+
+        <!-- Collective Impact -->
+        <div class="em-collective">
+          <div class="em-collective-header">
+            <span class="em-live-dot green"></span>
+            <span class="em-card-title" style="color:var(--green)">DAMPAK KOLEKTIF INDONESIA HARI INI</span>
+          </div>
+          <div class="em-collective-stats">
+            <div class="em-col-stat">
+              <span class="em-col-val gradient-text" id="col-trees">128,470</span>
+              <span class="em-col-lbl">🌳 Pohon setara diselamatkan</span>
+            </div>
+            <div class="em-col-stat">
+              <span class="em-col-val" style="color:#f97316;" id="col-students">3,650,000</span>
+              <span class="em-col-lbl">🎓 Pelajar aktif berkontribusi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RIGHT PANEL ─────────────────────────────────────── -->
+    <div class="em-right">
+
+      <!-- RIPPLE.AI Chat Panel -->
+      <div class="em-card em-chat-card">
+        <div class="em-card-header">
+          <span class="em-live-dot orange"></span>
+          <span class="em-card-title">BUTTERFLY EFFECT AI</span>
+        </div>
+
+        <!-- AI Header -->
+        <div class="em-ai-header">
+          <div class="em-ai-avatar">🦋</div>
+          <div>
+            <div class="em-ai-name">RIPPLE.AI</div>
+            <div class="em-ai-status">Siap menganalisis kebiasaanmu</div>
+          </div>
+          <div class="em-ai-badge">●</div>
+        </div>
+
+        <!-- AI Prompt -->
+        <div class="em-ai-prompt">
+          <p>Ceritakan satu kebiasaan yang kamu lakukan hari ini 🌱</p>
+          <p class="em-ai-example">Contoh: <em>"Aku tadi jalan kaki ke sekolah"</em> atau <em>"Aku baru beli makanan plastik"</em></p>
+        </div>
+
+        <!-- Quick habit chips -->
+        <div class="em-habit-chips" id="em-habit-chips">
+          <button class="em-chip" data-habit="Jalan kaki">🚶 Jalan kaki</button>
+          <button class="em-chip" data-habit="Belajar ekstra">📚 Belajar ekstra</button>
+          <button class="em-chip" data-habit="Nabung harian">💰 Nabung harian</button>
+          <button class="em-chip" data-habit="Tanam pohon">🌱 Tanam pohon</button>
+          <button class="em-chip" data-habit="Kurangi daging">🥗 Kurangi daging</button>
+          <button class="em-chip" data-habit="Buang sampah">🗑️ Buang sampah</button>
+        </div>
+
+        <!-- AI Response area -->
+        <div class="em-ai-response" id="em-ai-response">
+          <p style="color:var(--text-3);font-size:0.82rem;text-align:center;padding:12px 0;">
+            Pilih kebiasaan atau ketik sendiri untuk melihat efek domino-nya...
+          </p>
+        </div>
+
+        <!-- Input -->
+        <div class="em-chat-input-row">
+          <input type="text" id="em-chat-input" class="em-chat-input" placeholder="Ceri-takan kebiasaanmu di sini...">
+          <button class="em-send-btn" id="em-send-btn" onclick="RIPPLE.handleAIChat()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Earth Pulse -->
+      <div class="em-card em-pulse-card">
+        <div class="em-card-header" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="em-live-dot orange"></span>
+            <span class="em-card-title">LIVE EARTH PULSE</span>
+          </div>
+          <span class="em-clock" id="em-clock">00:00:00</span>
+        </div>
+
+        <!-- Live stats row -->
+        <div class="em-pulse-stats">
+          <div class="em-pulse-stat">
+            <span class="em-pulse-val" style="color:#f97316;">417.2</span>
+            <span class="em-pulse-unit">ppm CO₂</span>
+            <span class="em-pulse-label">Atmosfer global</span>
+          </div>
+          <div class="em-pulse-divider"></div>
+          <div class="em-pulse-stat">
+            <span class="em-pulse-val" style="color:#ef4444;">+1.2</span>
+            <span class="em-pulse-unit">°C</span>
+            <span class="em-pulse-label">Kenaikan suhu global</span>
+          </div>
+          <div class="em-pulse-divider"></div>
+          <div class="em-pulse-stat">
+            <span class="em-pulse-val" style="color:#ef4444;">8M+</span>
+            <span class="em-pulse-unit">ton</span>
+            <span class="em-pulse-label">Plastik ke lautan/thn</span>
+          </div>
+        </div>
+
+        <!-- Live event feed -->
+        <div class="em-feed-header">YANG SEDANG TERJADI DI DUNIA...</div>
+        <div class="em-feed" id="em-live-feed"></div>
+      </div>
+
+    </div><!-- /.em-right -->
+  </div><!-- /.em-layout -->
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION — CIVILIZATION REPORT
+══════════════════════════════════════════════════════════ -->
+<section data-section="report" id="section-report">
+  <div class="container section">
+    <div class="card report-header-card" id="report-header-content">
+      <p class="caption">📡 Civilization Report</p>
+      <h2 class="display-2">Kota <span class="gradient-text">Masa Depanmu</span></h2>
+      <p style="color:var(--text-2);margin-top:12px;">Masukkan data harian terlebih dahulu untuk melihat laporan.</p>
+    </div>
+    <div class="report-city-grid" id="report-city-grid"></div>
+    <div class="card report-narrative" id="report-narrative-el">
+      <h3>🧭 Narasi Peradaban</h3>
+      <div id="report-narrative-text" style="margin-top:12px;color:var(--text-2);line-height:1.8;">
+        Belum ada data. Mulai input harian untuk membuka laporan lengkap.
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <button class="btn btn-primary" data-nav="butterfly">🦋 Coba Butterfly Effect Simulator</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION — BUTTERFLY EFFECT SIMULATOR
+══════════════════════════════════════════════════════════ -->
+<section data-section="butterfly" id="section-butterfly">
+  <div class="container section">
+    <div class="section-header">
+      <p class="caption">🦋 Butterfly Effect Simulator</p>
+      <h2>Satu Perubahan Kecil. <span class="gradient-text">Dunia yang Berbeda.</span></h2>
+      <p>Pilih kebiasaan yang ingin kamu ubah dan lihat rantai efek domino yang terjadi.</p>
+    </div>
+    <div class="butterfly-selector" id="butterfly-selector"></div>
+    <div id="butterfly-chain-container"></div>
+    <div style="text-align:center;margin-top:48px;">
+      <button class="btn btn-green" data-nav="daily">✅ Mulai Perubahan Ini Hari Ini</button>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION — ABOUT US (Redesigned)
+══════════════════════════════════════════════════════════ -->
+<section data-section="about" id="section-about">
+  <div class="container section" style="max-width: 1100px;">
+    
+    <div class="section-header" style="margin-bottom: 60px;">
+      <p class="caption">🔍 Tentang RIPPLE</p>
+      <h2>Membentuk <span class="gradient-text">Bumi Masa Depan.</span></h2>
+      <p>RIPPLE lahir dari satu pertanyaan — bagaimana jika kita bisa melihat efek nyata dari setiap keputusan harian kita terhadap planet ini?</p>
+    </div>
+
+    <!-- About Grid Layout -->
+    <div class="about-grid">
+      
+      <!-- Main Vision Card (Spans 2 columns on desktop) -->
+      <div class="about-card card-vision">
+        <div class="about-card-bg"></div>
+        <div class="about-card-content">
+          <div class="about-icon">👁️</div>
+          <h3>Visi Kami</h3>
+          <p>Membangun generasi pelajar yang sadar dampak. Kami percaya bahwa setiap keputusan kecil yang kamu buat hari ini akan merambat bagai riak air (ripple), membentuk kondisi bumi di masa depan.</p>
+          
+          <div class="about-stats-row">
+            <div class="a-stat">
+              <span class="a-stat-val">12.4M</span>
+              <span class="a-stat-lbl">Pelajar Bergabung</span>
+            </div>
+            <div class="a-stat">
+              <span class="a-stat-val">5+</span>
+              <span class="a-stat-lbl">Pilar Dampak</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mission Card -->
+      <div class="about-card card-mission">
+        <div class="about-card-bg"></div>
+        <div class="about-card-content">
+          <div class="about-icon">🎯</div>
+          <h3>Misi Kami</h3>
+          <p>Memvisualisasikan data dampak lingkungan dan sosial dari kebiasaan harian pelajar Indonesia secara komprehensif dan real-time menggunakan teknologi simulasi AI.</p>
+        </div>
+      </div>
+
+      <!-- Origin Card -->
+      <div class="about-card card-origin">
+        <div class="about-card-bg"></div>
+        <div class="about-card-content">
+          <div class="about-icon">🇮🇩</div>
+          <h3>Latar Belakang</h3>
+          <p>Dibuat secara khusus oleh pelajar Indonesia untuk berkompetisi dan berinovasi di ajang <strong>INNOVATE 2025</strong> dengan mengusung tema <em>Jejak Hidup Pelajar Indonesia</em>.</p>
+        </div>
+      </div>
+
+      <!-- Action Footer Card (Spans full width) -->
+      <div class="about-card card-cta">
+        <div class="about-card-bg"></div>
+        <div class="about-card-content cta-content">
+          <div>
+            <h3>Siap melihat dampak dari pilihanmu?</h3>
+            <p style="margin-top:8px;color:var(--text-2);font-size:0.95rem;">Setiap hal kecil yang kamu lakukan hari ini, dunia akan merasakannya esok hari.</p>
+          </div>
+          <button class="btn btn-primary" data-nav="mirror">
+            🌊 Mulai Perjalananmu
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION — PROFILE
+══════════════════════════════════════════════════════════ -->
+<section data-section="profile" id="section-profile">
+  <div class="profile-header">
+    <h2 class="profile-title">Profil Pelajar</h2>
+    <div class="profile-actions">
+      <div class="p-search-box">
+        <input type="text" placeholder="Cari aktivitas...">
+        <span>🔍</span>
+      </div>
+      <button class="btn-logout" onclick="window.handleLogout()">
+        Keluar <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="profile-grid">
+    <!-- Top Left: Bio Card -->
+    <div class="p-card p-bio-card">
+      <div class="p-avatar-large" id="p-avatar-large"></div>
+      <div class="p-bio-info">
+        <h3 id="p-name">Nama Pelajar</h3>
+        <p class="p-meta">Bergabung: <span id="p-join-date">Hari ini</span></p>
+        <p class="p-meta">Peran: <span style="color:#f97316;">Pelopor Bumi</span></p>
+        <p class="p-meta">Misi: <span id="p-mission">Menyelamatkan Lingkungan</span></p>
+        <p class="p-meta" style="margin-top:8px;">Email: <span id="p-email">pelajar@ripple.com</span></p>
+        <div class="p-socials">
+          <div class="p-social-icon">IG</div>
+          <div class="p-social-icon">X</div>
+          <div class="p-social-icon">IN</div>
+        </div>
+      </div>
+      <button class="p-edit-btn">✎</button>
+    </div>
+
+    <!-- Top Right: Stats Card -->
+    <div class="p-card p-stats-card">
+      <h3>Statistik Dampak</h3>
+      <div class="p-stat-item">
+        <span class="p-stat-label">Total Skor Ripple:</span>
+        <div class="p-stat-bar-container"><div class="p-stat-bar" style="width:75%; background:#f97316;"></div></div>
+        <span class="p-stat-val">+45</span>
+      </div>
+      <div class="p-stat-item">
+        <span class="p-stat-label">Jejak Karbon Dicegah:</span>
+        <div class="p-stat-bar-container"><div class="p-stat-bar" style="width:60%; background:#10b981;"></div></div>
+        <span class="p-stat-val">120 kg</span>
+      </div>
+      <div class="p-stat-item">
+        <span class="p-stat-label">Jumlah Ripple Sosial:</span>
+        <div class="p-stat-bar-container"><div class="p-stat-bar" style="width:40%; background:#8b5cf6;"></div></div>
+        <span class="p-stat-val">24 Interaksi</span>
+      </div>
+    </div>
+
+    <!-- Bottom Left: Activity Timeline -->
+    <div class="p-card p-activity-card">
+      <h3>Riwayat Aktivitas</h3>
+      <div class="p-timeline">
+        <div class="pt-item completed">
+          <div class="pt-dot"></div>
+          <div class="pt-content">
+            <div class="pt-header">
+              <h4>Jalan Kaki / Sepeda 🚶</h4>
+              <span class="badge badge-green" style="background:rgba(16,185,129,0.1);color:#34d399;">Selesai</span>
+            </div>
+            <p>Mengurangi emisi karbon gas buang kendaraan dan berkontribusi langsung pada Pilar Tapak.</p>
+            <span class="pt-date">Hari ini</span>
+          </div>
+          <button class="pt-btn-arrow">→</button>
+        </div>
+        <div class="pt-item completed">
+          <div class="pt-dot"></div>
+          <div class="pt-content">
+            <div class="pt-header">
+              <h4>Belanja UMKM Lokal 🏪</h4>
+              <span class="badge badge-violet" style="background:rgba(16,185,129,0.1);color:#34d399;">Selesai</span>
+            </div>
+            <p>Mendukung perputaran ekonomi lokal di kotamu melalui Pilar Pilihan.</p>
+            <span class="pt-date">Kemarin</span>
+          </div>
+          <button class="pt-btn-arrow">→</button>
+        </div>
+        <div class="pt-item in-progress">
+          <div class="pt-dot"></div>
+          <div class="pt-content">
+            <div class="pt-header">
+              <h4>Misi: Kurangi Plastik Sekali Pakai</h4>
+              <span class="badge badge-orange" style="background:rgba(139,92,246,0.1);color:#a78bfa;">Sedang Berjalan</span>
+            </div>
+            <p>Berkomitmen membawa botol minum sendiri selama 7 hari berturut-turut.</p>
+            <span class="pt-date">Target: 3 hari lagi</span>
+          </div>
+          <button class="pt-btn-arrow">→</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Right: Status Card (No Subscription) -->
+    <div class="p-card p-status-card">
+      <h3 style="margin-bottom:8px;">Status Earth Mirror</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);line-height:1.4;margin-bottom:20px;">Berpartisipasilah secara gratis selamanya. Dampakmu adalah kontribusimu.</p>
+      <div class="p-status-content">
+        <div class="ps-tier">
+          <div class="ps-tier-icon">🌱</div>
+          <h4>Peringkat: Seedling</h4>
+        </div>
+        <ul class="ps-benefits">
+          <li>✔ Analisis AI tak terbatas</li>
+          <li>✔ 1 Cermin Bumi Aktif</li>
+          <li>✖ Kolaborasi Antar-Sekolah (Capaian +100 Ripple)</li>
+          <li>✖ Peringkat Global Cendekia (Capaian +500 Ripple)</li>
+        </ul>
+        <div class="ps-progress">
+          <span>Menuju Kolaborasi:</span>
+          <span>45/100 Ripple</span>
+        </div>
+        <div class="p-stat-bar-container" style="margin-top:8px; height:8px;"><div class="p-stat-bar" style="width:45%; background:#a78bfa;"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FLOATING AI BUBBLE ════════════════════════════════════ -->
+<div id="ai-bubble">
+  <div class="ai-bubble-header">
+    <div class="ai-bubble-dot"></div>
+    <span class="ai-bubble-title" id="ai-bubble-title-text">🪞 Earth Mirror AI</span>
+  </div>
+  <div id="ai-bubble-text">Analisis sedang diproses...</div>
+  <span class="ai-bubble-close" onclick="closeAIBubble()">✕</span>
+</div>
+
+<!-- ══ TEAM CHAT WIDGET ══════════════════════════════════════ -->
+<div class="team-chat-widget">
+  <div class="team-chat-window" id="team-chat-window">
+    <div class="tc-header">
+      <div class="tc-avatars">
+        <div class="tc-av" style="background-image:url('https://api.dicebear.com/7.x/notionists/svg?seed=Robben&backgroundColor=f97316');"></div>
+        <div class="tc-av" style="background-image:url('https://api.dicebear.com/7.x/notionists/svg?seed=Nadia&backgroundColor=f59e0b');"></div>
+        <div class="tc-av" style="background-image:url('https://api.dicebear.com/7.x/notionists/svg?seed=Dika&backgroundColor=10b981');"></div>
+      </div>
+      <div class="tc-header-info">
+        <h3>Tim Ripple</h3>
+        <span><span class="tc-online-dot"></span> Online sekarang</span>
+      </div>
+      <button class="tc-close" onclick="window.toggleTeamChat()">✕</button>
+    </div>
+    
+    <div class="tc-body" id="tc-body">
+      <div class="tc-msg tc-received fade-in">
+        <div class="tc-av-small" style="background-image:url('https://api.dicebear.com/7.x/notionists/svg?seed=Robben&backgroundColor=f97316');"></div>
+        <div class="tc-bubble">
+          Heyy! 👋 Selamat datang di Ripple. Aku Robben, co-founder-nya. Ada yang bisa kami bantu? Mau nanya tentang proyek, gabung tim, atau kolaborasi?
+        </div>
+      </div>
+    </div>
+    
+    <div class="tc-chips" id="tc-chips">
+      <button onclick="window.sendTeamMsg('🌍 Apa itu Ripple?')">🌍 Apa itu Ripple?</button>
+      <button onclick="window.sendTeamMsg('🤝 Mau gabung')">🤝 Mau gabung</button>
+      <button onclick="window.sendTeamMsg('🚀 Kolaborasi')">🚀 Kolaborasi</button>
+      <button onclick="window.sendTeamMsg('💡 Kontribusi')">💡 Kontribusi</button>
+    </div>
+    
+    <div class="tc-footer">
+      <input type="text" id="tc-input" placeholder="Tulis pesan..." onkeypress="if(event.key==='Enter') window.sendTeamMsg()">
+      <button class="tc-send" onclick="window.sendTeamMsg()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <button class="team-chat-toggle" id="team-chat-toggle" onclick="window.toggleTeamChat()">
+    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M7 15l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2h0"></path></svg>
+  </button>
+</div>
+
+<!-- ══ TOAST CONTAINER ═══════════════════════════════════════ -->
+<div id="toast-container"></div>
+
+<!-- ══ BOTTOM USER ACTIVITY TICKER ══════════════════════════ -->
+<div class="bottom-ticker" id="bottom-ticker">
+  <div class="live-badge-wrapper">
+    <div class="live-badge">LIVE</div>
+  </div>
+  <div class="bottom-ticker-track" id="bottom-ticker-track">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- ══ SCRIPTS ═══════════════════════════════════════════════ -->
+<script type="module" src="js/crazy.js"></script>
+<script type="module" src="js/app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('[data-nav]');
+      if (btn && window.RIPPLE) {
+        const sec = btn.dataset.nav;
+        if (sec === 'report')     RIPPLE.renderCivilizationReport?.();
+        if (sec === 'butterfly')  RIPPLE.renderButterflySection?.('transport');
+        if (sec === 'global')     RIPPLE.initGlobalMap?.();
+        if (sec === 'mirror')     RIPPLE.renderMirrorSection?.();
+        if (sec === 'dashboard')  RIPPLE.renderDashboard?.();
+        RIPPLE.showSection?.(sec);
+      }
+    });
+  });
+</script>
+</body>
+</html>

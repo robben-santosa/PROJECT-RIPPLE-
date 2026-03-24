@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<!-- Lottie web component -->
+<script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.3/dist/dotlottie-wc.js" type="module"></script>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — RIPPLE Earth Mirror</title>
+  <meta name="description" content="Masuk ke akun RIPPLE Earth Mirror dan mulai perjalanan dampak positifmu.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design tokens (matches index.html) ─────────────── */
+    :root {
+      --bg:          #050508;
+      --bg-2:        #090910;
+      --bg-3:        #0e0e18;
+      --surface:     #0c0c14;
+      --surface-2:   #111120;
+      --border:      rgba(255,255,255,0.06);
+      --border-glow: rgba(249,115,22,0.35);
+      --text:        #f5f0ea;
+      --text-2:      #9a907f;
+      --text-3:      #4a4235;
+      --violet:      #f97316;
+      --violet-d:    #ea580c;
+      --green:       #22c55e;
+      --amber:       #fbbf24;
+      --font-body:   'Plus Jakarta Sans', sans-serif;
+      --font-disp:   'Space Grotesk', sans-serif;
+      --radius:      16px;
+      --radius-lg:   24px;
+      --radius-xl:   32px;
+      --transition:  0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background:
+        radial-gradient(ellipse 80% 80% at 20% 50%, rgba(15,23,42,1) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 70% at 80% 50%, rgba(7,15,30,1) 0%, transparent 60%),
+        #050508;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── Rich layered background glows ─────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 70% at 75% 50%, rgba(249,115,22,0.14) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 15% 55%, rgba(234,88,12,0.10) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 50% at 50% 5%,  rgba(249,115,22,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 35% 45% at 85% 90%, rgba(251,191,36,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 30% 40% at 5% 10%,  rgba(34,197,94,0.04) 0%, transparent 50%);
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 60%, rgba(255,255,255,0.25) 0%, transparent 100%),
+        radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 25%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 90%, rgba(255,255,255,0.15) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.2) 0%, transparent 100%);
+    }
+
+    /* Aurora streak */
+    .aurora {
+      position: fixed; z-index: 0; pointer-events: none;
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: auroraDrift ease-in-out infinite;
+      opacity: 0.18;
+    }
+    .aurora.a1 {
+      width: 500px; height: 200px;
+      top: 10%; left: -10%;
+      background: linear-gradient(90deg, rgba(249,115,22,0.5), rgba(251,191,36,0.3));
+      animation-duration: 12s; animation-delay: 0s;
+    }
+    .aurora.a2 {
+      width: 400px; height: 150px;
+      bottom: 15%; right: -5%;
+      background: linear-gradient(90deg, rgba(34,197,94,0.3), rgba(6,182,212,0.2));
+      animation-duration: 16s; animation-delay: -5s;
+    }
+    @keyframes auroraDrift {
+      0%,100% { transform: translateX(0) scaleX(1); opacity: 0.12; }
+      50%      { transform: translateX(40px) scaleX(1.1); opacity: 0.22; }
+    }
+
+    /* Orbit ring deco */
+    .orbit-deco {
+      position: fixed; z-index: 0; pointer-events: none;
+      border-radius: 50%;
+      border: 1px solid rgba(249,115,22,0.09);
+      animation: orbitSpin linear infinite;
+    }
+    .orbit-deco.o1 { width: 700px; height: 700px; top: -250px; right: -250px; animation-duration: 40s; }
+    .orbit-deco.o2 { width: 500px; height: 500px; bottom: -200px; left: -200px; animation-duration: 60s; animation-direction: reverse; border-style: dashed; border-color: rgba(249,115,22,0.05); }
+    @keyframes orbitSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    /* ── Main card ──────────────────────────────────────── */
+    .auth-wrapper {
+      position: relative; z-index: 1;
+      display: flex;
+      width: 100%;
+      max-width: 900px;
+      min-height: 560px;
+      background: linear-gradient(145deg, rgba(14,14,28,0.95), rgba(5,5,12,0.98));
+      border: 1px solid rgba(249,115,22,0.12);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(32px);
+      box-shadow:
+        0 8px 80px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(249,115,22,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+      overflow: hidden;
+    }
+
+    /* ── LEFT: Illustration panel ───────────────────────── */
+    .auth-left {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 32px 40px;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(249,115,22,0.09) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 20% 80%, rgba(234,88,12,0.07) 0%, transparent 60%),
+        linear-gradient(160deg, rgba(20,10,5,0.6) 0%, rgba(8,6,15,0.8) 100%);
+      border-right: 1px solid rgba(249,115,22,0.08);
+      overflow: hidden;
+    }
+
+    /* Glow backdrop behind illustration */
+    .illus-glow {
+      position: absolute;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.10) 0%, transparent 70%);
+      filter: blur(30px);
+      z-index: 0;
+    }
+
+    /* Small floating dots */
+    .auth-dot {
+      position: absolute; border-radius: 50%;
+      background: rgba(249,115,22,0.18);
+      pointer-events: none; z-index: 0;
+      animation: dotPulse 3s ease-in-out infinite;
+    }
+    .auth-dot.d1 { width: 56px; height: 56px; top: 16%; right: 9%;  animation-delay: 0s; }
+    .auth-dot.d2 { width: 32px; height: 32px; bottom: 28%; left: 8%; animation-delay: 1s; }
+    .auth-dot.d3 { width: 20px; height: 20px; top: 54%; right: 13%; animation-delay: 0.5s; }
+    .auth-dot.d4 { width: 14px; height: 14px; top: 68%; left: 20%; animation-delay: 1.5s; }
+    @keyframes dotPulse {
+      0%,100%{ opacity:0.4; transform:scale(1); }
+      50%    { opacity:0.85; transform:scale(1.15); }
+    }
+
+    /* Logo top-left */
+    .auth-logo {
+      position: absolute; top: 28px; left: 28px; z-index: 2;
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .auth-logo-text {
+      font-family: var(--font-disp);
+      font-weight: 800; font-size: 1.15rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .auth-logo-text em { color: var(--violet); font-style: normal; text-shadow: 0 0 16px rgba(249,115,22,0.6); }
+
+    /* Illustration */
+    .auth-illustration {
+      position: relative; z-index: 1;
+      width: 460px; height: 460px;
+      animation: floatIllus 4s ease-in-out infinite;
+      filter: drop-shadow(0 16px 40px rgba(249,115,22,0.18));
+    }
+    @keyframes floatIllus {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-14px); }
+    }
+
+    /* Tagline strip */
+    .auth-tagline {
+      position: relative; z-index: 1;
+      text-align: center; margin-top: 20px;
+    }
+    .auth-tagline p {
+      font-family: var(--font-disp);
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--violet);
+      letter-spacing: 0.04em;
+    }
+    .auth-tagline span {
+      font-size: 0.72rem; color: var(--text-2);
+    }
+
+    /* Copyright */
+    .auth-left-copy {
+      position: absolute; bottom: 20px; left: 28px;
+      font-size: 0.63rem; color: var(--text-3);
+      z-index: 2; line-height: 1.5;
+    }
+
+    /* ── RIGHT: Form panel ──────────────────────────────── */
+    .auth-right {
+      width: 360px; flex-shrink: 0;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 52px 44px;
+    }
+
+    .auth-title {
+      font-family: var(--font-disp);
+      font-size: 2.2rem; font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .auth-sub {
+      font-size: 0.82rem; color: var(--text-2);
+      margin-bottom: 32px;
+    }
+
+    /* Form groups */
+    .auth-form-group { margin-bottom: 18px; }
+
+    .auth-label {
+      display: block;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 7px;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+
+    .auth-input {
+      width: 100%;
+      padding: 13px 20px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .auth-input::placeholder { color: var(--text-3); }
+    .auth-input:focus {
+      border-color: rgba(249,115,22,0.6);
+      box-shadow: 0 0 0 3px rgba(249,115,22,0.12), 0 0 20px rgba(249,115,22,0.08);
+      background: var(--surface);
+    }
+
+    /* Input with icon */
+    .input-wrap { position: relative; }
+    .input-wrap .auth-input { padding-right: 46px; }
+    .toggle-pw {
+      position: absolute; right: 18px; top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer; color: var(--text-3);
+      font-size: 0.88rem; user-select: none;
+      transition: var(--transition);
+    }
+    .toggle-pw:hover { color: var(--violet); }
+
+    /* Forgot link */
+    .auth-forgot {
+      display: block; text-align: right;
+      font-size: 0.76rem; color: var(--text-2);
+      text-decoration: none; margin-top: 7px;
+      transition: var(--transition);
+    }
+    .auth-forgot:hover { color: var(--violet); }
+
+    /* Submit button */
+    .auth-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 26px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 0 30px rgba(249,115,22,0.4);
+      letter-spacing: 0.02em;
+    }
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(249,115,22,0.65);
+    }
+    .auth-btn:active { transform: translateY(0); }
+    .auth-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* Switch */
+    .auth-switch {
+      text-align: center;
+      font-size: 0.8rem; color: var(--text-2);
+      margin-top: 22px;
+    }
+    .auth-switch a {
+      color: var(--violet); font-weight: 600;
+      text-decoration: none; transition: var(--transition);
+    }
+    .auth-switch a:hover { color: var(--amber); }
+
+    /* Divider links */
+    .auth-links {
+      text-align: center;
+      font-size: 0.72rem; color: var(--text-3);
+      margin-top: 14px;
+    }
+    .auth-links a {
+      color: var(--text-3); text-decoration: underline;
+      text-underline-offset: 3px; transition: var(--transition);
+    }
+    .auth-links a:hover { color: var(--text-2); }
+
+    /* Social Login */
+    .auth-divider {
+      display: flex; align-items: center; margin: 20px 0;
+      color: var(--text-3); font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06);
+    }
+    .auth-divider span { padding: 0 16px; font-weight: 600; }
+
+    .social-logins { display: flex; gap: 12px; margin-bottom: 12px; }
+    .btn-social {
+      flex: 1; padding: 12px; border-radius: 50px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text); font-family: var(--font-body); font-size: 0.85rem; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      cursor: pointer; transition: var(--transition);
+    }
+    .btn-social:hover {
+      background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); transform: translateY(-2px);
+    }
+    .btn-social:active { transform: translateY(0); }
+
+    /* Contact bottom-right */
+    .auth-contact {
+      position: absolute; bottom: 20px; right: 44px;
+      font-size: 0.63rem; color: var(--text-3);
+      text-align: right; z-index: 2;
+    }
+    .auth-contact a { color: var(--text-2); text-decoration: none; }
+    .auth-contact a:hover { color: var(--violet); }
+
+    /* Loading spinner inside button */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-loading { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 720px) {
+      .auth-wrapper { flex-direction: column; max-width: 420px; min-height: unset; }
+      .auth-left { border-right: none; border-bottom: 1px solid var(--border); min-height: 230px; padding: 28px; }
+      .auth-left-copy { display: none; }
+      .auth-illustration { width: 170px; height: 170px; }
+      .auth-right { width: 100%; padding: 36px 28px 40px; }
+      .auth-contact { display: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="css/crazy.css">
+</head>
+<body>
+  <div class="aurora a1"></div>
+  <div class="aurora a2"></div>
+  <div class="orbit-deco o1"></div>
+  <div class="orbit-deco o2"></div>
+
+  <div class="auth-wrapper">
+
+    <!-- ── LEFT: Illustration ──────────────────────────── -->
+    <div class="auth-left">
+      <a href="index.html" class="auth-logo">
+        <span class="auth-logo-text">RIP<em>PLE</em></span>
+      </a>
+
+      <div class="illus-glow"></div>
+      <div class="auth-dot d1"></div>
+      <div class="auth-dot d2"></div>
+      <div class="auth-dot d3"></div>
+      <div class="auth-dot d4"></div>
+
+      <dotlottie-wc
+        src="https://lottie.host/e35b2994-ecf2-4c06-8320-0aa8526c4345/YgpAbqxb30.lottie"
+        class="auth-illustration"
+        autoplay loop
+      ></dotlottie-wc>
+
+      <div class="auth-tagline">
+        <p>🌊 Every Choice You Make</p>
+        <span>The World Feels It</span>
+      </div>
+
+      <div class="auth-left-copy">
+        © 2025 RIPPLE Earth Mirror<br>
+        INNOVATE 2025 — Jejak Hidup Pelajar Indonesia
+      </div>
+    </div>
+
+    <!-- ── RIGHT: Form ─────────────────────────────────── -->
+    <div class="auth-right">
+      <h1 class="auth-title">Login</h1>
+      <p class="auth-sub">Selamat datang kembali, penjaga bumi 🌍</p>
+
+      <form id="login-form" onsubmit="handleLogin(event)" novalidate>
+
+        <div class="auth-form-group">
+          <label class="auth-label" for="login-email">Email / Username</label>
+          <input
+            type="text"
+            id="login-email"
+            class="auth-input"
+            placeholder="email atau username kamu"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="auth-form-group">
+          <label class="auth-label" for="login-password">Password</label>
+          <div class="input-wrap">
+            <input
+              type="password"
+              id="login-password"
+              class="auth-input"
+              placeholder="masukkan password"
+              autocomplete="current-password"
+              required
+            >
+            <span class="toggle-pw" id="toggle-pw-btn" title="Tampilkan password"
+              onclick="togglePw('login-password','toggle-pw-btn')">👁</span>
+          </div>
+          <a href="#" class="auth-forgot">Lupa Password?</a>
+        </div>
+
+        <button type="submit" class="auth-btn" id="login-btn">
+          🌊 Masuk ke RIPPLE
+        </button>
+
+        <div style="margin-top: 16px; padding: 12px; background: rgba(249,115,22,0.1); border: 1px dashed rgba(249,115,22,0.3); border-radius: 8px; text-align: center;">
+          <p style="font-size: 0.75rem; color: var(--text-2); margin-bottom: 4px;">Akun Demo Tersedia:</p>
+          <p style="font-size: 0.85rem; color: #f97316; font-weight: 600;">pelajar@ripple.com <span style="color:var(--text-3); font-weight:400; margin:0 4px;">|</span> bumi2025</p>
+        </div>
+
+      </form>
+
+      <div class="auth-divider">
+        <span>atau lanjutkan dengan</span>
+      </div>
+
+      <div class="social-logins">
+        <button type="button" class="btn-social" onclick="handleSocial('Google')">
+          <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg> Google
+        </button>
+        <button type="button" class="btn-social" onclick="handleSocial('GitHub')">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.379.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"></path>
+          </svg> GitHub
+        </button>
+      </div>
+
+      <p class="auth-switch">
+        Belum punya akun? <a href="register.html">Daftar Sekarang</a>
+      </p>
+
+      <div class="auth-links">
+        <a href="index.html">← Kembali ke Beranda</a>
+        &nbsp;·&nbsp;
+        <a href="#">Syarat &amp; Ketentuan</a>
+      </div>
+    </div>
+
+    <div class="auth-contact">
+      Ada masalah? Hubungi kami<br>
+      <a href="mailto:ripple@earthmirror.id">ripple@earthmirror.id</a>
+    </div>
+
+  </div>
+
+  <script>
+    function togglePw(inputId, btnId) {
+      const inp = document.getElementById(inputId);
+      const btn = document.getElementById(btnId);
+      if (inp.type === 'password') {
+        inp.type = 'text'; btn.textContent = '🙈'; btn.title = 'Sembunyikan';
+      } else {
+        inp.type = 'password'; btn.textContent = '👁'; btn.title = 'Tampilkan';
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const pass = document.getElementById('login-password').value;
+      const btn = document.getElementById('login-btn');
+      
+      btn.innerHTML = '<span class="btn-loading"></span> Memverifikasi...';
+      btn.disabled = true;
+
+      setTimeout(() => { 
+        if ((email === 'pelajar@ripple.com' && pass === 'bumi2025') || (email.length > 3 && pass.length > 3)) {
+          // Success
+          localStorage.setItem('ripple_auth', 'true');
+          localStorage.setItem('ripple_name', email.split('@')[0]);
+          localStorage.setItem('ripple_intro', 'pending');
+          localStorage.setItem('ripple_intro_type', 'login');
+          window.location.href = 'index.html';
+        } else {
+          // Fail
+          alert("Gagal login. Gunakan akun demo: pelajar@ripple.com / bumi2025");
+          btn.innerHTML = '🌊 Masuk ke RIPPLE';
+          btn.disabled = false;
+        }
+      }, 1200);
+    }
+
+    function handleSocial(provider) {
+      document.body.style.cursor = 'wait';
+      const btnGroup = document.querySelector('.social-logins');
+      if (btnGroup) btnGroup.style.opacity = '0.5';
+      setTimeout(() => {
+        localStorage.setItem('ripple_auth', 'true');
+        localStorage.setItem('ripple_name', provider);
+        localStorage.setItem('ripple_intro', 'pending');
+        localStorage.setItem('ripple_intro_type', 'login');
+        window.location.href = 'index.html';
+      }, 1000);
+    }
+  </script>
+  <script type="module" src="js/crazy.js"></script>
+</body>
+</html>

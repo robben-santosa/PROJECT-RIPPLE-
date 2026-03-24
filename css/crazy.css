@@ -1,0 +1,95 @@
+/* ══════════════════════════════════════════════════════════════
+   crazy.css 
+   Advanced Interactive & Aesthetic Features
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Custom Stardust Cursor & Glowing ──────────────────── */
+@media (pointer: fine) {
+  body, a, button, input, select, textarea {
+    cursor: none !important;
+  }
+}
+
+#custom-cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 6px; height: 6px;
+  background-color: var(--text);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px 2px rgba(255,255,255,0.8);
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+#custom-cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 32px; height: 32px;
+  border: 1px solid rgba(249,115,22,0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease-out, width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+  box-shadow: 0 0 20px rgba(249,115,22,0.3);
+}
+
+/* Hover states for cursor */
+body.cursor-hover #custom-cursor-dot {
+  width: 4px; height: 4px;
+  background-color: var(--violet);
+  box-shadow: 0 0 20px 4px rgba(249,115,22,0.9);
+}
+
+body.cursor-hover #custom-cursor-ring {
+  width: 50px; height: 50px;
+  background-color: rgba(249,115,22,0.05);
+  border-color: rgba(249,115,22,0.8);
+}
+
+/* Stardust trail particles */
+.cursor-particle {
+  position: fixed;
+  width: 4px; height: 4px;
+  background: var(--violet);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99997;
+  opacity: 0.8;
+  box-shadow: 0 0 8px var(--violet);
+  animation: stardustFade 0.6s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes stardustFade {
+  0% { transform: scale(1) translate(-50%, -50%); opacity: 0.8; }
+  100% { transform: scale(0) translate(-50%, -50%); opacity: 0; }
+}
+
+/* ── 9. Neon Tracing Borders ──────────────────────────────── */
+.neon-border {
+  position: relative;
+}
+.neon-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle), transparent 70%, rgba(249,115,22,1) 100%);
+  z-index: -1;
+  animation: spinNeon 3s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.neon-border:hover::before {
+  opacity: 1;
+}
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes spinNeon {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
